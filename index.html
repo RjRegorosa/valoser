@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/css/styles.css">
+</head>
+<body style="background-image: url('./style/images/romantic-background.jpg');">
+    <audio controls autoplay>
+        <source src = "Malcolm Todd - 4me 4me (Lyrics).mp3">
+    </audio>
+    <div class="container">
+        <div>
+            <h1 class="header_text">Will you be my valentine?</h1>
+        </div>
+        <div class="gif_container">
+            <img src="https://media.giphy.com/media/LnKonfpQ44fNvuGLkA/giphy.gif" alt="Cute animated illustration">
+        </div>
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+    var hoverCount = 0; // Counter to track hover events
+    var noClickCount = 0; // Counter to track how many times "No" button is clicked for the fourth time
+
+    function nextPage() {
+        window.location.href = "yes.html";
+    }
+
+    function moveButton() {
+        var messages = [
+            "REALLY??",
+            "Don't click no >:(",
+            "Click yes pls",
+            "Ur joking right haha",
+            "Click yes pls"
+        ];
+
+        var yesButton = document.getElementById('yesButton');
+        var noButton = document.getElementById('noButton');
+        var x, y;
+
+        if (hoverCount < 4) {
+            // If clicked less than 4 times, just display messages
+            x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+            noButton.innerHTML = messages[hoverCount];
+        } else {
+            // If clicked 4 times, move the "No" button towards the "Yes" button
+            noClickCount++;
+            var deltaX = Math.random() * 50; // Random movement offset
+            var deltaY = Math.random() * 50;
+
+            // Calculate new position closer to the "Yes" button
+            x = yesButton.offsetLeft + deltaX;
+            y = yesButton.offsetTop + deltaY;
+
+            // Set new position for the "No" button
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+
+            // Reset hoverCount and noClickCount if it exceeds 4
+            if (noClickCount >= 4) {
+                hoverCount = 0;
+                noClickCount = 0;
+            }
+        }
+
+        // Increment hoverCount, reset to 0 if it exceeds the length of messages
+        hoverCount = (hoverCount + 1) % (messages.length);
+    }
+</script>
+
+</body>
+</html>
